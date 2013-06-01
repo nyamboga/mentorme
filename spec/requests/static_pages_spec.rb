@@ -1,29 +1,21 @@
 require 'spec_helper'
 
 describe "Static Pages" do
-  describe "Home Page" do 
-  	it "should have the content 'MentorMe'" do 
-  		visit '/static_pages/home'
-  		page.should have_selector('h1', text: 'MentorMe')
-  	end
 
-  	it "should have the tile 'Home'" do 
-  		visit '/static_pages/home'
-  		page.should have_selector('title',
-  															text: "MentorMe | Home")
-  	end
+	subject { page }
+
+  describe "Home Page" do
+		before { visit root_path } 
+
+  	it { should have_selector('h1', text: 'MentorMe') }
+  	it { should have_selector('title', text: full_title('')) }
+  	it { should_not have_selector('title', text: " | Home") }
   end
 
   describe "About Page" do 
-  	it "should have the content 'About'" do 
-  		visit '/static_pages/about'
-  		page.should have_selector('h1', text: 'About')
-  	end
+  	before { visit about_path }
 
-  	it "should have the tile 'Home'" do
-  		visit '/static_pages/about'
-  		page.should have_selector('title',
-  															text: "MentorMe | About")
-  	end
+  	it { should have_selector('h1', text: 'About') }
+  	it { should have_selector('title', text: full_title('About')) }
   end
 end
